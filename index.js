@@ -17,17 +17,13 @@ async function run(){
         await client.connect();
         const database= client.db("Hero-Rider-DB");
         const usersCollection = database.collection('users');
-        console.log("Connected successfully to server");
-        // app.get('/', (req, res) => {
-        //     res.send('Hello World!')
-        //   })
-          
+        console.log("Connected successfully to server");  
     //  Services Request GET API Method
-    app.get('/users', async(req,res)=>{
-        const cursor = usersCollection.find({});
-        const service = await cursor.toArray();
-        res.json(service);
-    })
+    // app.get('/users', async(req,res)=>{
+    //     const cursor = usersCollection.find({});
+    //     const service = await cursor.toArray();
+    //     res.json(service);
+    // })
         // Single Product GET API Method
     // app.get('/service/:id', async(req,res)=>{
     //     const id= req.params.id;
@@ -35,10 +31,16 @@ async function run(){
     //     const singleService = await servicesCollection.findOne(query);
     //     res.json(singleService);
     // })
+    app.post('/rider', async(req,res)=>{
+      const rider = req.body;
+      console.log(rider);
+      const dataInsert= await usersCollection.insertOne(rider);
+      res.json(dataInsert);
+    })
 
     }
     finally{
-        await client.close();
+        // await client.close();
     }
 }
 run().catch(console.dir);
